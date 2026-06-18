@@ -7,6 +7,7 @@ import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -16,7 +17,7 @@ class HealthcareApiTest {
 
     @Test
     void dashboardReturnsGovernedMetrics() throws Exception {
-        mvc.perform(get("/api/v1/dashboard"))
+        mvc.perform(get("/api/v1/dashboard").with(user("executive@vitalsync.ai").roles("EXECUTIVE")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.totalMembers").value(8))
                 .andExpect(jsonPath("$.activeEnrollments").value(6))
@@ -25,7 +26,7 @@ class HealthcareApiTest {
 
     @Test
     void member360CombinesAllThreeSources() throws Exception {
-        mvc.perform(get("/api/v1/members/Member-1001"))
+        mvc.perform(get("/api/v1/members/Member-1001").with(user("analyst@vitalsync.ai").roles("ANALYST")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.memberId").value("Member-1001"))
                 .andExpect(jsonPath("$.enrollment.planType").value("Gold PPO"))

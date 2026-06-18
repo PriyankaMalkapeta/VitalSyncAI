@@ -20,6 +20,11 @@ management:
     web:
       exposure:
         include: health,info
+security:
+  jwt:
+    issuer: vitalsync-api
+    secret: ${JWT_SECRET:vitalsync-local-development-secret-change-before-deploy}
+    ttl-minutes: 60
 
 ---
 spring:

@@ -14,7 +14,15 @@ Step 1 of the PRD implementation is complete:
 - H2 local database and PostgreSQL deployment profile
 - Integration tests for dashboard metrics and cross-source lineage
 
-Security is deliberately open only for this first local-development slice. JWT roles, PHI policy enforcement, and persistent audit logging are the next implementation step and are required before deployment.
+Step 2.1 authentication is also complete:
+
+- Signed, one-hour JWT access tokens
+- Stateless bearer-token validation on protected APIs
+- BCrypt-protected local demo accounts
+- Issuer and expiration validation
+- External `JWT_SECRET` configuration for deployments
+
+Role-specific endpoint authorization, PHI policy enforcement, and persistent audit logging remain required before deployment.
 
 ## Run the frontend
 
@@ -36,6 +44,13 @@ The local API is available at `http://localhost:8080/api/v1`:
 - `GET /dashboard`
 - `GET /members`
 - `GET /members/{memberId}`
+
+Authenticate through `POST /api/v1/auth/login`. Local synthetic-data demo accounts:
+
+- Executive: `executive@vitalsync.ai` / `DemoExecutive!2026`
+- Analyst: `analyst@vitalsync.ai` / `DemoAnalyst!2026`
+
+Send the returned token as `Authorization: Bearer <accessToken>`. Change all demo credentials and set a strong `JWT_SECRET` outside source control before deployment.
 
 ## Validate
 
