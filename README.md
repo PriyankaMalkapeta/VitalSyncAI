@@ -1,4 +1,4 @@
-# Clarity Health Platform
+# VitalSyncAI
 
 An executive intelligence dashboard that unifies healthcare payer data from member management, enrollment, and pharmacy benefit management systems.
 
